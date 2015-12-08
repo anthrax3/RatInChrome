@@ -25,7 +25,7 @@ function getTextAndPasswordFields() {
   return JSON.stringify(data);
 }
 
-function sendEmail() {
+function sendDataToServer() {
   // get current url
   cur_url = window.location.href;
 }
