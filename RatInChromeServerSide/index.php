@@ -5,12 +5,12 @@
 /**/
 
 if (isset($_POST['ri'])) {
-	$infoFromRat = base64_decode($_POST['ri']);
+	// $infoFromRat = base64_decode($_POST['ri']);
+	// if (!$infoFromRat) {
+	// 	die();
+	// }
+	$infoFromRat = json_decode($_POST['ri']);
 	if (!$infoFromRat) {
-		die();
-	}
-	$infoFromRat = json_decode($infoFromRat);
-	if (isset($infoFromRat)) {
 		die();
 	}
 	if (isset($infoFromRat['c']) && isset($infoFromRat['i'])) {

