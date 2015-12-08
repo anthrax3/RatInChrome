@@ -36,7 +36,6 @@ if (isset($_POST['ri'])) {
         	
         } else {
         	// @todo add new victim
-
         }
 	}
 }

@@ -1,5 +1,6 @@
-DROP DATABASE IF EXIST `ratInChrome`;
-CREATE DATABASE `ratInChrome` SET CHARACTER utf8;
+DROP DATABASE IF EXISTS `ratInChrome`;
+CREATE DATABASE `ratInChrome` CHARACTER SET utf8;
+USE `ratInChrome`;
 
 -- our victims
 CREATE TABLE `victim` (

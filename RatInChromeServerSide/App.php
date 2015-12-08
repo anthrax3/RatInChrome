@@ -9,7 +9,7 @@ class RatInChromeApp {
     public static function getDbConnection () {
         if (!self::$connection) {
             //Инициализаций подключения к БД
-            self::$connection = new mysqli("127.0.0.1", "root", "Step1993", "log_db");
+            self::$connection = new mysqli("127.0.0.1", "root", "Step1993", "ratInChrome");
             if (self::$connection->connect_errno) {
             	error_log(self::$connection->connect_error);
                 die();
